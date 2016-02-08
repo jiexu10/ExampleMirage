@@ -1,4 +1,23 @@
 export default function() {
+  this.get('/posts', function(db, request) {
+    return {
+      data: db.posts.map(attrs => (
+        { type: 'posts', id: attrs.id, attributes: attrs }
+      ))
+    };
+  });
+
+  this.get('/posts/:id', function(db, request) {
+    let id = request.params.id;
+
+    return {
+      data: {
+        type: 'posts',
+        id: id,
+        attributes: db.posts.find(id)
+      }
+    };
+  });
 
   // These comments are here to help you get started. Feel free to delete them.
 
